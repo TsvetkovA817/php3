@@ -10,4 +10,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-composer_laravel_update.bat
+cmd_composer_laravel_update.bat
+cmd_artisan_new_controller.bat
+cmd_*.bat

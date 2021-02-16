@@ -11,6 +11,27 @@
 |
 */
 
+
+
+Route::get('/',  ['uses'=>'HomeController@index', 'as'=>'home']  );
+
+Route::get('/admin', ['uses'=>'Admin\IndexController@index']  );
+
+Route::get('/news', ['uses'=>'News\NewsController@news', 'as'=>'news']  );
+
+Route::get('/news/{id}', ['uses'=>'News\NewsController@newsOne', 'as'=>'newsOne']  );
+
+Route::get('/newsKat', ['uses'=>'News\NewsController@newsKat', 'as'=>'newsKat']  );
+
+Route::get('/newsOneKat/{id}', ['uses'=>'News\NewsController@newsOneKat', 'as'=>'newsOneKat']  );
+
+/*
+Route::get('/test', ['uses'=>'Admin\IndexController@test1']  );
+Route::get('/test', ['uses'=>'Admin\IndexController@test2']  );
+*/
+
+
+/*
 Route::get('/', function () {
     return view('welcome');
 });
@@ -57,3 +78,4 @@ Route::get('/hello3', function () use($text, $title) {
 
 Route::get('/hello4', function () use($text, $title, $s) {
     return $s; });
+*/
