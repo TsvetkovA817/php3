@@ -11,11 +11,13 @@
 |
 */
 
+//use App\Http\Controllers\Admin\CategoryController;   
+
 
 
 Route::get('/',  ['uses'=>'HomeController@index', 'as'=>'home']  );
 
-Route::get('/admin', ['uses'=>'Admin\IndexController@index']  );
+Route::get('/admin', ['uses'=>'Admin\IndexController@index', 'as'=>'admin' ] );
 
 Route::get('/news', ['uses'=>'News\NewsController@news', 'as'=>'news']  );
 
@@ -25,10 +27,26 @@ Route::get('/newsKat', ['uses'=>'News\NewsController@newsKat', 'as'=>'newsKat'] 
 
 Route::get('/newsOneKat/{id}', ['uses'=>'News\NewsController@newsOneKat', 'as'=>'newsOneKat']  );
 
-/*
-Route::get('/test', ['uses'=>'Admin\IndexController@test1']  );
-Route::get('/test', ['uses'=>'Admin\IndexController@test2']  );
-*/
+Route::get('/adminc', ['uses'=>'Admin\CategoryController@index', 'as'=>'adminCateg']  );
+//Route::get('/adminc', ['uses'=>'CategoryController@index', 'as'=>'adminCateg']  );
+
+Route::get('/admaddctg', ['uses'=>'Admin\CategoryController@create', 'as'=>'adminAddCtg']  );
+
+Route::post('/admsavectg', ['uses'=>'Admin\CategoryController@store', 'as'=>'adminSaveCtg']  );
+
+Route::get('/adminn', ['uses'=>'Admin\NewsController@index', 'as'=>'adminNews']  );
+
+Route::get('/admAddNew', ['uses'=>'Admin\NewsController@create', 'as'=>'adminAddNew']  );
+
+Route::post('/admSaveNew', ['uses'=>'Admin\NewsController@store', 'as'=>'adminSaveNew']  );
+
+Route::get('/contacts', ['uses'=>'News\ContactsController@contacts', 'as'=>'contacts']  );
+
+Route::post('/contactsSave', ['uses'=>'News\ContactsController@store', 'as'=>'contactsSave']  );
+
+Route::get('/zaprdt', ['uses'=>'News\zaprdtController@zaprdt', 'as'=>'zaprData']  );
+
+Route::post('/zaprdtSave', ['uses'=>'News\zaprdtController@store', 'as'=>'zaprdtSave']  );
 
 
 /*

@@ -12,8 +12,17 @@ class IndexController extends Controller
     public function index()
     {
        $prevRoute=route('home');
-       return view('news.admin', ['prevRoute'=>$prevRoute]);    
+       return view('news.admin.admin', ['prevRoute'=>$prevRoute]);    
     }
 
+
+  
+    public function adminNews()
+    {
+       $prevRoute=route('admin');
+       return view('news.admin.news.index', ['prevRoute'=>$prevRoute]);    
+    }
+
+    
 
 }

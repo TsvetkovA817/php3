@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 class NewsController extends Controller
 {
     
-protected $news = [ 
+public $news = [ 
                   ['id'=>1,'title'=>'Новость1','inform'=>'Текст Новость1','idKat'=>1],
                   ['id'=>2,'title'=>'Новость2','inform'=>'Текст Новость2','idKat'=>2],
                   ['id'=>3,'title'=>'Новость3','inform'=>'Текст Новость3','idKat'=>3],
@@ -15,7 +15,7 @@ protected $news = [
                 
                 ];   
 
-protected $newsKat = [ 
+public $newsKat = [ 
                   ['id'=>1,'nameKat'=>'Категория1'],
                   ['id'=>2,'nameKat'=>'Категория2'],
                   ['id'=>3,'nameKat'=>'Категория3']
