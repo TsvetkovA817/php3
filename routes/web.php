@@ -34,6 +34,8 @@ Route::get('/admaddctg', ['uses'=>'Admin\CategoryController@create', 'as'=>'admi
 
 Route::post('/admsavectg', ['uses'=>'Admin\CategoryController@store', 'as'=>'adminSaveCtg']  );
 
+Route::get('/admshowctg/{id}', ['uses'=>'Admin\CategoryController@show', 'as'=>'adminShowCtg']  );
+
 Route::get('/adminn', ['uses'=>'Admin\NewsController@index', 'as'=>'adminNews']  );
 
 Route::get('/admAddNew', ['uses'=>'Admin\NewsController@create', 'as'=>'adminAddNew']  );

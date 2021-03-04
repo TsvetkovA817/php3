@@ -35,10 +35,7 @@ class ContactsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['email'=>'required']);    // поле обязательно к заполнению
-        $request->validate(['fio'=>'required']);     // поле обязательно к заполнению
-        $request->validate(['name'=>'required']);     // поле обязательно к заполнению
-        $request->validate(['desc'=>'required']);     // поле обязательно к заполнению
+        $request->validate(['email'=>'required', 'fio'=>'required', 'name'=>'required', 'desc'=>'required' ]);    // поле обязательно к заполнению
         
         //dd($request->all());   
         

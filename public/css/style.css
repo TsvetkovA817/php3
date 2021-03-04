@@ -3,12 +3,12 @@
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
-                height: 100vh;
+                min-height: 70vh;
                 margin: 0;
             }
 
             .full-height {
-                height: 100vh;
+                min-height: 70vh;
             }
 
             .flex-center {
@@ -29,6 +29,7 @@
 
             .content {
                 text-align: center;
+                max-width: 1024px;
             }
 
             .title {

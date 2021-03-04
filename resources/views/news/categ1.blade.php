@@ -24,12 +24,12 @@
     
     @foreach ($anews as $news)
         
-             @if (intval($news['idKat'])==intval($id)) 
-                 <?php $routeName=route('newsOne',$news['id']); ?>
+             @if (intval($news->idKat)==intval($id)) 
+                 <?php $routeName=route('newsOne',$news->id); ?>
              
              
-                  <h2> <a href="{{$routeName }}">  {{$news['title'] }} </a> </h2>
-                       <div> {{$news['inform'] }}</div>
+                  <h2> <a href="{{$routeName }}">  {{$news->title }} </a> </h2>
+                       <div> {{$news->inform }}</div>
                        <hr> 
              @endif  
         

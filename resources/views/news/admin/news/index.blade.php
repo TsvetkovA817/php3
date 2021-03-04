@@ -8,7 +8,6 @@
     
 @section('content')  
     @php    
-         $news=[];
          $news=$arr[0];
          $prevRoute=$arr[1];
     @endphp
@@ -29,15 +28,22 @@
              <tr>
                  <th>Id</th>
                  <th>Наименование</th>
+                 <th>ИД Категория</th>
                  <th>Категория</th>
                  <th>Дата</th>
+                 <th>Управление</th>
              </tr>
          </thead>
          <tbody>
-          @forelse($news as $new)   
+          @forelse($news as $n) 
+         
            <tr>
-               <td>{{$new['id']}}</td>
-               <td>{{$new['title']}}</td>
+             <td>{{$n->id}}</td>
+             <td>{{$n->title}}</td>               
+             <td>{{$n->idKat}}</td>
+             <td>{{$n->nameKat}}</td>
+             <td>{{$n->updated_at}}</td>
+             <td><a href="">Изм.</a>&nbsp; <a href="">X</a></td>
            </tr>
           @empty
              <h3>нет данных</h3>

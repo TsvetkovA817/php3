@@ -1,33 +1,23 @@
 <?php
 
 namespace App\Http\Controllers\News;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
     
-public $news = [ 
-                  ['id'=>1,'title'=>'Новость1','inform'=>'Текст Новость1','idKat'=>1],
-                  ['id'=>2,'title'=>'Новость2','inform'=>'Текст Новость2','idKat'=>2],
-                  ['id'=>3,'title'=>'Новость3','inform'=>'Текст Новость3','idKat'=>3],
-                  ['id'=>4,'title'=>'Новость4','inform'=>'Текст Новость4','idKat'=>3]
-                
-                ];   
 
-public $newsKat = [ 
-                  ['id'=>1,'nameKat'=>'Категория1'],
-                  ['id'=>2,'nameKat'=>'Категория2'],
-                  ['id'=>3,'nameKat'=>'Категория3']
-                
-                ];   
     
-
 public function news()
 {
+    $news = DB::table('news')->select('id','name as title', 'desc as inform', 'idk as idKat')->get(); 
+
     $prevRoute=route('home');
     $a=array();
-    $a[]=$this->news;
+    $a[]=$news;
     $a[]=$prevRoute;
 
     return view('news.news', ['arr'=>$a]);
@@ -37,8 +27,10 @@ public function news()
     
 public function newsOne($id)
 {
-    $news = $this->getNewsById($id);
     
+    $news = DB::table('news')->select('id','name as title', 'desc as inform', 'idk as idKat')->where('id', $id)->first();
+    
+
     $nameRoute = route('news');
     $nameRoute2 = route('newsKat');
     $prevRoute0=route('home');
@@ -62,8 +54,8 @@ public function newsOne($id)
     
 private function getNewsById($id)
 {
-    foreach($this->news as $news){
-        if ($news['id']==$id){
+    foreach($news as $v){
+        if ((int)$v->id==(int)$id){
             return $news;
         }
     }
@@ -74,10 +66,12 @@ private function getNewsById($id)
 public function newsKat()
 {
 
-    $prevRoute=route('home');
+    $newsKat = DB::table('categ')->select('id','name as nameKat')->get(); 
     
+    $prevRoute=route('home');
+        
     $a=array();
-    $a[]=$this->newsKat;
+    $a[]=$newsKat;
     $a[]=$prevRoute;
 
     return view('news.categ', ['arr'=>$a]);
@@ -88,11 +82,13 @@ public function newsKat()
 
 public function newsOneKat($id)
 {
+   $news = DB::table('news')->select('id','name as title', 'desc as inform', 'idk as idKat')->where('idk', $id)->get();
+    
    $prevRoute=route('newsKat');
    $prevRoute0=route('home');    
 
     $a=array();
-    $a[]=$this->news;
+    $a[]=$news;
     $a[]=$prevRoute;
     $a[]=$id;
     $a[]=$prevRoute0;

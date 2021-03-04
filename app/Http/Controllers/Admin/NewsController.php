@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
     
+   /*
     public $news = [ 
                   ['id'=>1,'title'=>'Новость1','inform'=>'Текст Новость1','idKat'=>1],
                   ['id'=>2,'title'=>'Новость2','inform'=>'Текст Новость2','idKat'=>2],
@@ -15,6 +17,7 @@ class NewsController extends Controller
                   ['id'=>4,'title'=>'Новость4','inform'=>'Текст Новость4','idKat'=>3]
                 
                 ]; 
+    */            
     
     /**
      * Display a listing of the resource.
@@ -23,9 +26,12 @@ class NewsController extends Controller
      */
     public function index()
     {
+       
+       $news = DB::table('news')->select('news.id','news.name as title', 'news.desc as inform', 'news.idk as idKat',  'news.updated_at','categ.name as nameKat' )->leftJoin('categ', 'news.idk', '=', 'categ.id')->get(); 
+        
        $prevRoute=route('admin');
        $a=[];
-       $a[]=$this->news;
+       $a[]=$news;
        $a[]=$prevRoute;
         
        return view('news.admin.news.index', ['arr'=>$a]);    
@@ -52,7 +58,13 @@ class NewsController extends Controller
     public function store(Request $request)
     {
          $request->validate(['name'=>'required']);     // поле обязательно к заполнению
-         dd($request->all());    
+         //dd($request->all());    
+         $id = DB::table('news')->insertGetId(['name' => $request->input('name'), 'desc' => $request->input('desc')]
+);
+        if (!empty($id)) {$o='сохранено ';}      
+        else {$o='не сохранено';}
+        $o .='<br><br> <a href="/adminn">Управление новостями</a><br>' ;   
+        return response($o);
     }
     
     

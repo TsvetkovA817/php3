@@ -4,19 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
 
-    protected $newsKat = [ 
-                  ['id'=>1,'nameKat'=>'Категория1'],
-                  ['id'=>2,'nameKat'=>'Категория2'],
-                  ['id'=>3,'nameKat'=>'Категория3']
-                
-                ]; 
-    
-    
     
     /**
      * Display a listing of the resource.
@@ -25,9 +17,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
+       
+       $newsKat = DB::table('categ')->select('id','name as nameKat', 'updated_at')->get(); 
+     
        $prevRoute=route('admin');
        $a=[];
-       $a[]=$this->newsKat;
+       $a[]=$newsKat;
        $a[]=$prevRoute;
         
        return view('news.admin.categ.index', ['arr'=>$a]);    
@@ -65,13 +60,16 @@ class CategoryController extends Controller
         //dd($request->fullurl());  
         //dd($request->query('гет парам'));  
         //dd($request->get('гет парам'));  
-        
-                
-        $this->newsKat[] = ['id'=>intval(array_key_last( $this->newsKat))+2,'nameKat'=>$request->input('name')];
+        //$newsKat[] = ['id'=>intval(array_key_last( $this->newsKat))+2,'nameKat'=>$request->input('name')];
         //print_r($this->newsKat);
         
+        $id = DB::table('categ')->insertGetId(['name' => $request->input('name'), 'desc' => $request->input('desc')]
+);
+        if (!empty($id)) {$o='сохранено ';}      
+        else {$o='не сохранено';}
+        $o .='<br><br> <a href="/adminc">Управление Категориями</a><br>' ;   
         //return redirect()->route('admin');
-        return response('сохранено');
+        return response($o);
         //return response->view('view.any');
         //return response->download('file.any');
       
@@ -86,7 +84,16 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+    
+    $categ = DB::table('categ')->select('id','name', 'desc','updated_at')->where('id', $id)->first();
+    
+    if (!empty($categ)){
+
+    $a=array();
+    $a[]=$categ;
+    $a[]=$id;        
+    return view('news.admin.categ.show', ['arr'=>$a]);    
+    }
     }
 
     /**

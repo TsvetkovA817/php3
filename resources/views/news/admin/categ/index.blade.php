@@ -28,15 +28,18 @@
              <tr>
                  <th>Id</th>
                  <th>Наименование</th>
-                 <th>Слаг</th>
                  <th>Дата</th>
+                 <th>Управление</th>
              </tr>
          </thead>
          <tbody>
           @forelse($categories as $categoria)   
            <tr>
-               <td>{{$categoria['id']}}</td>
-               <td>{{$categoria['nameKat']}}</td>
+               <td>{{$categoria->id}}</td>
+               <td>{{$categoria->nameKat}}</td>
+               <td>{{$categoria->updated_at}}</td>
+               <td><a href="{{route('adminShowCtg', $categoria->id)}}">Пр.</a>&nbsp; <a href="">Изм.</a>&nbsp; <a href="">X</a></td>   
+               
            </tr>
           @empty
              <h3>нет данных</h3>
