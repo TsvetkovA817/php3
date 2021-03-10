@@ -1,21 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\News;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Zdt;
 
-class zaprdtController extends Controller
+class ZdtController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function zaprdt()
+    public function index()
     {
-        return view('news.zaprdt'); 
+       $zdt = Zdt::query()->select('id','name', 'updated_at')->paginate(4);    
+       //dd($zdt);
+       return view('news.admin.zdt.index', ['zdt'=>$zdt]);    
+
     }
 
     /**
@@ -36,22 +39,7 @@ class zaprdtController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['email'=>'required', 'fio'=>'required', 'name'=>'required', 'desc'=>'required']);    // поле обязательно к заполнению
-        
-        //dd($request->all());  
-        
-        //v3:
-        $z= new Zdt();
-        
-        if($request->isMethod('post')){
-            $z->fill($request->all());
-            $z->save();
-            return redirect()->route('home');
-        }
-        
-        return view('news.zaprdt' );
-        //return response('Отправлено');
-
+        //
     }
 
     /**
@@ -97,5 +85,11 @@ class zaprdtController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function delete(Zdt $zdt)
+    {
+        //dd($zdt);
+        $zdt->delete();
+        return redirect()->route('adminZdt');
     }
 }

@@ -36,7 +36,9 @@
     @endforeach
 
      <a href="{{$prevRoute}}"> назад в категории</a> 
-
+     
+     {{$anews->links()}}
+     
 </div>
 
 @endsection

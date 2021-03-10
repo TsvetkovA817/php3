@@ -38,7 +38,7 @@
                <td>{{$categoria->id}}</td>
                <td>{{$categoria->nameKat}}</td>
                <td>{{$categoria->updated_at}}</td>
-               <td><a href="{{route('adminShowCtg', $categoria->id)}}">Пр.</a>&nbsp; <a href="">Изм.</a>&nbsp; <a href="">X</a></td>   
+               <td><a href="{{route('adminShowCtg', $categoria->id)}}">Пр.</a>&nbsp; <a href="{{route('adminUpdCtg', $categoria->id)}} ">Изм.</a>&nbsp; <a href="{{route('adminDelCtg', $categoria->id)}}">X</a></td>   
                
            </tr>
           @empty
@@ -47,6 +47,7 @@
          </tbody>
           
        </table>
+        {{ $categories->links()}}
        <hr>
     </div>                 
     

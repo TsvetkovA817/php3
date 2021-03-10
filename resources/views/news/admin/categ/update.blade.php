@@ -2,7 +2,7 @@
 
 
 @section('h1')
-   Добавление категории
+   Редактирование категории
 @endsection 
 
    
@@ -21,16 +21,16 @@
        @endforeach
     @endif
     <hr>
-    <form action="{{route('adminSaveCtg')}}" method="post">
+    <form action="{{ route('adminUpdCtg', $categ->id) }}" method="post">
         @csrf
         <table width="50%" cellspacing="0" cellpadding="4">
         <tr>
         <td align="left" width="100">Наименование категории</td>
-        <td align="left"><input type="text" placeholder="категория 1" name="name" value="{{old('name')}}" maxlength="50" size="30" class="form-control"></td>
+        <td align="left"><input type="text" placeholder="категория 1" name="name" value="{{ $categ->name }}" maxlength="50" size="30" class="form-control"></td>
         </tr>
         <tr>
         <td align="left" width="100">Описание категории</td>
-        <td align="left"><textarea class="form-control" rows="5" cols="32" type="text" placeholder="Описание категории" name="desc" >{!! old('desc')!!}</textarea></td>
+        <td align="left"><textarea class="form-control" rows="5" cols="32" type="text" placeholder="Описание категории" name="desc" >{!! $categ->desc !!}</textarea></td>
         </tr>
         </table>
         <br>

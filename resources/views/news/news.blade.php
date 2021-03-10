@@ -26,7 +26,7 @@
         <hr>
     @endforeach
 
-
+  {{$anews->links()}}
 
 </div>
 

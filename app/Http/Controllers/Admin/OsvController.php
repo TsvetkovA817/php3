@@ -1,21 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\News;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Zdt;
+use App\Osv;
 
-class zaprdtController extends Controller
+class OsvController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function zaprdt()
+    public function index()
     {
-        return view('news.zaprdt'); 
+       $osv = Osv::query()->select('id','name', 'updated_at')->paginate(4);    
+       //dd($osv);
+       return view('news.admin.osv.index', ['osv'=>$osv]);    
+
     }
 
     /**
@@ -36,22 +39,7 @@ class zaprdtController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['email'=>'required', 'fio'=>'required', 'name'=>'required', 'desc'=>'required']);    // поле обязательно к заполнению
-        
-        //dd($request->all());  
-        
-        //v3:
-        $z= new Zdt();
-        
-        if($request->isMethod('post')){
-            $z->fill($request->all());
-            $z->save();
-            return redirect()->route('home');
-        }
-        
-        return view('news.zaprdt' );
-        //return response('Отправлено');
-
+        //
     }
 
     /**

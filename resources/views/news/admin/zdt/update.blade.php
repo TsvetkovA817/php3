@@ -2,14 +2,14 @@
 
 
 @section('h1')
-   Добавление категории
+   Редактирование запроса
 @endsection 
 
    
     
 @section('content')  
    
-    <a href="{{ route('adminCateg')}}">Список категорий</a><br>
+    <a href="{{ route('adminCateg')}}">Список запросов</a><br>
    
    <div><hr><p>                    
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla minima, ullam eveniet deserunt error unde nesciunt vitae in cupiditate omnis quibusdam.  </p>
@@ -21,16 +21,16 @@
        @endforeach
     @endif
     <hr>
-    <form action="{{route('adminSaveCtg')}}" method="post">
+    <form action="{{ route('adminUpdZdt', $categ->id) }}" method="post">
         @csrf
         <table width="50%" cellspacing="0" cellpadding="4">
         <tr>
-        <td align="left" width="100">Наименование категории</td>
-        <td align="left"><input type="text" placeholder="категория 1" name="name" value="{{old('name')}}" maxlength="50" size="30" class="form-control"></td>
+        <td align="left" width="100">Наименование </td>
+        <td align="left"><input type="text" placeholder="название 1" name="name" value="{{ $zdt->name }}" maxlength="50" size="30" class="form-control"></td>
         </tr>
         <tr>
-        <td align="left" width="100">Описание категории</td>
-        <td align="left"><textarea class="form-control" rows="5" cols="32" type="text" placeholder="Описание категории" name="desc" >{!! old('desc')!!}</textarea></td>
+        <td align="left" width="100">Описание </td>
+        <td align="left"><textarea class="form-control" rows="5" cols="32" type="text" placeholder="Описание " name="desc" >{!! $zdt->desc !!}</textarea></td>
         </tr>
         </table>
         <br>

@@ -9,7 +9,7 @@
 @endphp
 
 @section('h1')
-    {{ $news->title }}
+    {{ $news->name }}
 @endsection
 
 
@@ -18,7 +18,7 @@
 <div>
                    
                     <br><hr><br>
-                    <div> {{ $news->inform }}</div>  
+                    <div> {{ $news->desc }}</div>  
                     <br><hr><br>
                     <a href="{{$prevRoute }}"> назад </a><br> 
                     <a href="{{$prevRoute2 }}"> в категории</a> 

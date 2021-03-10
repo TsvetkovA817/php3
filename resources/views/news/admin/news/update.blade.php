@@ -2,7 +2,7 @@
 
 
 @section('h1')
-   Добавление новости
+   Редактирование новости
 @endsection 
 
     
@@ -21,21 +21,39 @@
        @endforeach
     @endif
     <hr>
-    <form action="{{route('adminSaveNew')}}" method="post">
+    <form action="{{route('adminUpdNew',$news->id)}}" method="post">
         @csrf
         <table width="50%" cellspacing="0" cellpadding="4">
-        <tr><td align="left" width="100">Категория</td><td align="left"><select class="form-control" name="selctg" id="selctg"> <option >Выбрать</option></select></td></tr>
+        
+        
+        
+        <tr><td align="left" width="100">Категория</td><td align="left">
+         <select class="form-control" name="idk" id="selctg"> 
+          @foreach($categories as $category)
+            <option value="{{$category->id}}" {{ $news->idk==$category->id ? 'selected' : ''  }}> {{$category->name}}</option>
+          @endforeach
+         </select>
+        </td></tr>
+        
         <tr>
         <td align="left" width="100">Заголовок новости</td>
-        <td align="left"><input class="form-control" type="text" placeholder="новость 1" name="name" value="{{old('name')}}" maxlength="50" size="30"></td>
+        <td align="left"><input class="form-control" type="text" placeholder="новость 1" name="name" value="{{$news->name}}" maxlength="50" size="30"></td>
         </tr>
         <tr>
         <td align="left" width="100">Описание новости</td>
-        <td align="left" width="100"><textarea class="form-control" rows="5" cols="32" type="text" placeholder="Описание новости" name="desc" >{!! old('desc')!!}</textarea></td>
+        <td align="left" width="100"><textarea class="form-control" rows="5" cols="32" type="text" placeholder="Описание новости" name="desc" >{!! $news->desc !!}</textarea></td>
         </tr>
         <tr><td align="left" width="100">Изображение</td><td align="left"><input class="form-control" type="file" name="image" id="image"></td></tr>
             <tr><td align="left" width="100">Статус</td><td align="left"><select class="form-control" name="selstat" id="selstat"> <option >Выбрать</option></select></td></tr>
         
+        <tr><td align="left" width="100">Источник новости</td><td align="left">
+         <select class="form-control" name="idsrc" id="selsrcn"> 
+          @foreach($srcn as $s)
+            <option value="{{$s->id}}" {{ $news->idsrc==$s->id ? 'selected' : ''  }}> {{$s->name}}</option>
+          @endforeach
+         </select>
+         </td></tr>
+       
         </table>
         <br>
         <button class="form-control" type="submit">Сохранить</button>

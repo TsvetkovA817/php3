@@ -23,6 +23,10 @@ class IndexController extends Controller
        return view('news.admin.news.index', ['prevRoute'=>$prevRoute]);    
     }
 
-    
+    public function adminZdt()
+    {
+       $prevRoute=route('admin');
+       return view('news.admin.zdt.index', ['prevRoute'=>$prevRoute]);    
+    }
 
 }

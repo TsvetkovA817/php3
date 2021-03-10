@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\News;
+use App\Categ;
+use App\Srcn;
 
 class NewsController extends Controller
 {
@@ -27,7 +30,9 @@ class NewsController extends Controller
     public function index()
     {
        
-       $news = DB::table('news')->select('news.id','news.name as title', 'news.desc as inform', 'news.idk as idKat',  'news.updated_at','categ.name as nameKat' )->leftJoin('categ', 'news.idk', '=', 'categ.id')->get(); 
+       //$news = DB::table('news')->select('news.id','news.name as title', 'news.desc as inform', 'news.idk as idKat',  'news.updated_at','categ.name as nameKat' )->leftJoin('categ', 'news.idk', '=', 'categ.id')->get(); 
+        
+       $news = News::query()->select('news.id','news.name as title', 'news.desc as inform', 'news.idk as idKat',  'news.updated_at','categ.name as nameKat' )->leftJoin('categ', 'news.idk', '=', 'categ.id')->paginate(8);
         
        $prevRoute=route('admin');
        $a=[];
@@ -59,12 +64,29 @@ class NewsController extends Controller
     {
          $request->validate(['name'=>'required']);     // поле обязательно к заполнению
          //dd($request->all());    
-         $id = DB::table('news')->insertGetId(['name' => $request->input('name'), 'desc' => $request->input('desc')]
-);
+        
+        //v1: 
+        //$id = DB::table('news')->insertGetId(['name' => $request->input('name'), 'desc' => $request->input('desc')]  );
+        
+        /*
+        //v2: 
+        $id = News::query()->insertGetId(['name' => $request->input('name'), 'desc' => $request->input('desc')]  );
+        
         if (!empty($id)) {$o='сохранено ';}      
         else {$o='не сохранено';}
         $o .='<br><br> <a href="/adminn">Управление новостями</a><br>' ;   
         return response($o);
+        */
+        
+        //v3:
+        $news= new News();
+        
+        if($request->isMethod('post')){
+            $news->fill($request->all());
+            $news->save();
+            return redirect()->route('adminNews');
+        }
+        return view('news.admin.news.add', [ 'categories'=>Categ::query()->select(['id','name'])->get() ] );
     }
     
     
@@ -98,9 +120,16 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, News $news)
     {
-        //
+        //dd($news);
+        
+           if($request->isMethod('post')){
+            $news->fill($request->all());
+            $news->save();
+            return redirect()->route('adminNews');
+        } 
+     return view('news.admin.news.update', ['news'=>$news, 'categories'=>Categ::query()->select(['id','name'])->get(), 'srcn'=>Srcn::query()->select(['id','name'])->get() ]);    
     }
 
     /**
@@ -111,6 +140,15 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+       
     }
+
+    public function delete(News $news)
+    {
+         //dump($news);
+        dd($news);
+        $news->delete();
+        return redirect()->route('adminNews');
+    }
+    
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Categ;
+use App\Srcn;
 
 class CategoryController extends Controller
 {
@@ -18,7 +20,9 @@ class CategoryController extends Controller
     public function index()
     {
        
-       $newsKat = DB::table('categ')->select('id','name as nameKat', 'updated_at')->get(); 
+       //$newsKat = DB::table('categ')->select('id','name as nameKat', 'updated_at')->get(); 
+        
+       $newsKat = Categ::query()->select('id','name as nameKat', 'updated_at')->paginate(4);    
      
        $prevRoute=route('admin');
        $a=[];
@@ -63,8 +67,12 @@ class CategoryController extends Controller
         //$newsKat[] = ['id'=>intval(array_key_last( $this->newsKat))+2,'nameKat'=>$request->input('name')];
         //print_r($this->newsKat);
         
-        $id = DB::table('categ')->insertGetId(['name' => $request->input('name'), 'desc' => $request->input('desc')]
-);
+        //v1:
+        //$id = DB::table('categ')->insertGetId(['name' => $request->input('name'), 'desc' => $request->input('desc')] );
+        
+        /*v2:
+        $id = Categ::query()->insertGetId(['name' => $request->input('name'), 'desc' => $request->input('desc')]  );
+        
         if (!empty($id)) {$o='сохранено ';}      
         else {$o='не сохранено';}
         $o .='<br><br> <a href="/adminc">Управление Категориями</a><br>' ;   
@@ -72,8 +80,18 @@ class CategoryController extends Controller
         return response($o);
         //return response->view('view.any');
         //return response->download('file.any');
-      
+        */
         
+        //v3:
+        $ctg= new Categ();
+        
+        if($request->isMethod('post')){
+            $ctg->fill($request->all());
+            $ctg->save();
+            return redirect()->route('adminCateg');
+        }
+        return view('news.admin.categ.add');
+
     }
 
     /**
@@ -114,9 +132,16 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Categ $categ, Srcn $srcn)
     {
-        //
+            //dd($categ);
+        
+           if($request->isMethod('post')){
+            $categ->fill($request->all());
+            $categ->save();
+            return redirect()->route('adminCateg');
+           }
+        return view('news.admin.categ.update', ['categ'=>$categ]);    
     }
 
     /**
@@ -129,4 +154,13 @@ class CategoryController extends Controller
     {
         //
     }
+    
+    //categ=имени таблицы, удаляет по ид из адр.строки, 'магия' модели 
+    public function delete(Categ $categ)
+    {
+        //dd($categ);
+        $categ->delete();
+        return redirect()->route('adminCateg');
+    }
+
 }
