@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Zdt;
+use App\Http\Requests\ZdtEditRequest;
 
 class ZdtController extends Controller
 {
@@ -15,9 +16,9 @@ class ZdtController extends Controller
      */
     public function index()
     {
-       $zdt = Zdt::query()->select('id','name', 'updated_at')->paginate(4);    
+       $zdt = Zdt::query()->select('id','name', 'updated_at')->paginate(4);
        //dd($zdt);
-       return view('news.admin.zdt.index', ['zdt'=>$zdt]);    
+       return view('news.admin.zdt.index', ['zdt'=>$zdt]);
 
     }
 
@@ -64,6 +65,8 @@ class ZdtController extends Controller
         //
     }
 
+
+
     /**
      * Update the specified resource in storage.
      *
@@ -71,10 +74,24 @@ class ZdtController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ZdtEditRequest $request, Zdt $zdt)
     {
-        //
+
+            //dd($zdt);
+            //dd($request);
+
+           if($request->isMethod('post')){
+            $zdt->fill($request->all());
+            $isOk=$zdt->save();
+            //$isOk=false;
+            if($isOk){
+            return redirect()->route('adminZdt')->with('success','запись обновлена');}
+            else{
+               return redirect()->route('adminZdt')->with('error','запись не обновлена');}
+           }
+        return view('news.admin.zdt.update', ['zdt'=>$zdt]);
     }
+
 
     /**
      * Remove the specified resource from storage.
