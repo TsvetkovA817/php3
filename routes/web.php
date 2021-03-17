@@ -11,13 +11,9 @@
 |
 */
 
-//use App\Http\Controllers\Admin\CategoryController;   
-
-
+Route::get('/admin', ['uses'=>'Admin\IndexController@index', 'as'=>'admin' ] )->middleware('auth');
 
 Route::get('/',  ['uses'=>'HomeController@index', 'as'=>'home']  );
-
-Route::get('/admin', ['uses'=>'Admin\IndexController@index', 'as'=>'admin' ] );
 
 Route::get('/news',  ['uses'=>'News\NewsController@news', 'as'=>'news'] );
 
@@ -27,28 +23,32 @@ Route::get('/newsKat', ['uses'=>'News\NewsController@newsKat', 'as'=>'newsKat'] 
 
 Route::get('/newsOneKat/{id}', ['uses'=>'News\NewsController@newsOneKat', 'as'=>'newsOneKat']  );
 
-Route::get('/adminc', ['uses'=>'Admin\CategoryController@index', 'as'=>'adminCateg']  );
-//Route::get('/adminc', ['uses'=>'CategoryController@index', 'as'=>'adminCateg']  );
+Route::group(['middleware' => 'auth'], function () {
 
-Route::get('/admaddctg', ['uses'=>'Admin\CategoryController@create', 'as'=>'adminAddCtg']  );
+ Route::get('/adminc', ['uses'=>'Admin\CategoryController@index', 'as'=>'adminCateg']  )->middleware('auth');
 
-Route::post('/admsavectg', ['uses'=>'Admin\CategoryController@store', 'as'=>'adminSaveCtg']  );
+ Route::get('/admaddctg', ['uses'=>'Admin\CategoryController@create', 'as'=>'adminAddCtg']  )->middleware('auth');
 
-Route::get('/admshowctg/{id}', ['uses'=>'Admin\CategoryController@show', 'as'=>'adminShowCtg']  );
+ Route::post('/admsavectg', ['uses'=>'Admin\CategoryController@store', 'as'=>'adminSaveCtg']  )->middleware('auth');
 
-Route::get('/admDelCtg/{categ}', ['uses'=>'Admin\CategoryController@delete', 'as'=>'adminDelCtg']  );
+ Route::get('/admshowctg/{id}', ['uses'=>'Admin\CategoryController@show', 'as'=>'adminShowCtg']  )->middleware('auth');
 
-Route::match(['post','get'],'/admUpdCtg/{categ}', ['uses'=>'Admin\CategoryController@update', 'as'=>'adminUpdCtg']  );
+ Route::get('/admDelCtg/{categ}', ['uses'=>'Admin\CategoryController@delete', 'as'=>'adminDelCtg']  )->middleware('auth');
 
-Route::get('/adminn', ['uses'=>'Admin\NewsController@index', 'as'=>'adminNews']  );
+ Route::match(['post','get'],'/admUpdCtg/{categ}', ['uses'=>'Admin\CategoryController@update', 'as'=>'adminUpdCtg']  )->middleware('auth');
 
-Route::get('/admAddNew', ['uses'=>'Admin\NewsController@create', 'as'=>'adminAddNew']  );
+ Route::get('/adminn', ['uses'=>'Admin\NewsController@index', 'as'=>'adminNews']  )->middleware('auth');
 
-Route::post('/admSaveNew', ['uses'=>'Admin\NewsController@store', 'as'=>'adminSaveNew']  );
+ Route::get('/admAddNew', ['uses'=>'Admin\NewsController@create', 'as'=>'adminAddNew']  )->middleware('auth');
 
-Route::get('/admDelNew/{news}', ['uses'=>'Admin\NewsController@delete', 'as'=>'adminDelNew']  );
+ Route::post('/admSaveNew', ['uses'=>'Admin\NewsController@store', 'as'=>'adminSaveNew']  )->middleware('auth');
 
-Route::match(['post','get'],'/admUpdNew/{news}', ['uses'=>'Admin\NewsController@update', 'as'=>'adminUpdNew']  );
+ Route::get('/admDelNew/{news}', ['uses'=>'Admin\NewsController@delete', 'as'=>'adminDelNew']  )->middleware('auth');
+
+ Route::match(['post','get'],'/admUpdNew/{news}', ['uses'=>'Admin\NewsController@update', 'as'=>'adminUpdNew']  )->middleware('auth');
+
+});
+
 //обрат связь
 Route::get('/contacts', ['uses'=>'News\ContactsController@contacts', 'as'=>'contacts']  );
 
@@ -57,16 +57,33 @@ Route::post('/contactsSave', ['uses'=>'News\ContactsController@store', 'as'=>'co
 Route::get('/zaprdt', ['uses'=>'News\zaprdtController@zaprdt', 'as'=>'zaprData']  );
 
 Route::post('/zaprdtSave', ['uses'=>'News\zaprdtController@store', 'as'=>'zaprdtSave']  );
+
 //запр.данных админ
-Route::get('/adminz', ['uses'=>'Admin\ZdtController@index', 'as'=>'adminZdt']  );
-Route::get('/admshowzdt/{id}', ['uses'=>'Admin\ZdtController@show', 'as'=>'adminShowZdt']  );
-Route::get('/admDelZdt/{zdt}', ['uses'=>'Admin\ZdtController@delete', 'as'=>'adminDelZdt']  );
-Route::match(['post','get'],'/admUpdZdt/{zdt}', ['uses'=>'Admin\ZdtController@update', 'as'=>'adminUpdZdt']  );
+Route::get('/adminz', ['uses'=>'Admin\ZdtController@index', 'as'=>'adminZdt']  )->middleware('auth');
+Route::get('/admshowzdt/{id}', ['uses'=>'Admin\ZdtController@show', 'as'=>'adminShowZdt']  )->middleware('auth');
+Route::get('/admDelZdt/{zdt}', ['uses'=>'Admin\ZdtController@delete', 'as'=>'adminDelZdt']  )->middleware('auth');
+Route::match(['post','get'],'/admUpdZdt/{zdt}', ['uses'=>'Admin\ZdtController@update', 'as'=>'adminUpdZdt']  )->middleware('auth');
+
 //обр.связь
-Route::get('/admino', ['uses'=>'Admin\OsvController@index', 'as'=>'adminOsv']  );
-Route::get('/admshowosv/{id}', ['uses'=>'Admin\OsvController@show', 'as'=>'adminShowOsv']  );
-Route::get('/admDelOsv/{osv}', ['uses'=>'Admin\OsvController@delete', 'as'=>'adminDelOsv']  );
-Route::match(['post','get'],'/admUpdOsv/{osv}', ['uses'=>'Admin\OsvController@update', 'as'=>'adminUpdOsv']  );
+Route::get('/admino', ['uses'=>'Admin\OsvController@index', 'as'=>'adminOsv']  )->middleware('auth');
+Route::get('/admshowosv/{id}', ['uses'=>'Admin\OsvController@show', 'as'=>'adminShowOsv']  )->middleware('auth');
+Route::get('/admDelOsv/{osv}', ['uses'=>'Admin\OsvController@delete', 'as'=>'adminDelOsv']  )->middleware('auth');
+Route::match(['post','get'],'/admUpdOsv/{osv}', ['uses'=>'Admin\OsvController@update', 'as'=>'adminUpdOsv']  )->middleware('auth');
+
+//Управление пользователями
+Route::group(['middleware' => 'auth'], function () {
+ Route::get('/adminu', ['uses'=>'Admin\UsrController@index', 'as'=>'adminUsr']  );
+ Route::get('/admshowUsr/{id}', ['uses'=>'Admin\UsrController@show', 'as'=>'adminShowUsr']  );
+ Route::get('/admDelUsr/{user}', ['uses'=>'Admin\UsrController@delete', 'as'=>'adminDelUsr']  );
+ Route::match(['post','get'],'/admUpdUsr/{user}', ['uses'=>'Admin\UsrController@update', 'as'=>'adminUpdUsr']  );
+});
+
+//роуты аутентификации
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+//
+
+
 
 /*
 Route::get('/', function () {

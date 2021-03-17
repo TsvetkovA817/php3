@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
@@ -11,8 +12,15 @@ class IndexController extends Controller
     
     public function index()
     {
-       $prevRoute=route('home');
-       return view('news.admin.admin', ['prevRoute'=>$prevRoute]);    
+        
+       $isAdm=false;
+       if(Auth::check()){
+        $user=Auth::user();
+        if($user->role==1){ 
+        $isAdm=true; }                     
+        //dd($user);
+        }
+       return view('news.admin.admin', ['isAdm'=>$isAdm]);    
     }
 
 

@@ -9,7 +9,7 @@
     
 @section('content')  
    
-    <a href="{{ route('adminCateg')}}">Список запросов</a><br>
+    <a href="{{ route('adminOsv')}}">Список запросов</a><br>
    
    <div><hr><p>                    
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla minima, ullam eveniet deserunt error unde nesciunt vitae in cupiditate omnis quibusdam.  </p>

@@ -33,17 +33,24 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 52px;
+                margin-bottom: 20px;
+                margin-top: 20px;
             }
 
-            .links > a {
+            .cmenu{
+                margin-bottom: 15px;
+                margin-top: 15px;
+            } 
+            .cmenu > a {
                 color: #636b6f;
                 padding: 0 25px;
-                font-size: 13px;
+                font-size: 10px;
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
+
             }
 
             .m-b-md {
@@ -60,13 +67,7 @@
             align-items: center;
         }
 
-      header {
+      greybox {
             background: #DFDFDF;
-
             border: 1px solid #B5B7BA;
-            box-sizing: border-box;
-            height: 68px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
+     }

@@ -1,13 +1,12 @@
 
-                <div class="top-right links">
+               
                     
-                        <a href="\">Home</a>
-                    
-                         <a href="/contacts">Contacts</a>
-                       
-                        <a href="#">Login</a>
-
-                        <a href="#">Register</a>
+                        <li class="nav-item">
+                        <a class="nav-link" href="\">Home</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="/contacts">Contacts</a>
+                        </li>
                         
         
-                </div>
+               
