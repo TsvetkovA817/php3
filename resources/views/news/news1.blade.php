@@ -18,7 +18,9 @@
 <div>
                    
                     <br><hr><br>
-                    <div> {{ $news->desc }}</div>  
+                    <div> {{ $news->pubDate }}</div><br>  
+                    <div> {{ $news->desc }}   </div><br>
+                    <div>  <a href="{{ $news->link }}">Читать на яндексе</a> </div>  
                     <br><hr><br>
                     <a href="{{$prevRoute }}"> назад </a><br> 
                     <a href="{{$prevRoute2 }}"> в категории</a> 

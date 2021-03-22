@@ -170,6 +170,7 @@ class NewsController extends Controller
         dd($news);
         $news->delete();
         return redirect()->route('adminNews');
-    }
+    }   
+    
 
 }

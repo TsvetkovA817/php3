@@ -10,7 +10,7 @@ class News extends Model
     
     public $timestamps = true;
     
-    protected $fillable = ['name','desc', 'idk'];
+    protected $fillable = ['name','desc', 'idk', 'link', 'guid','pubDate', 'idsrc'];
     
     
     public function categ(){

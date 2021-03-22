@@ -23,7 +23,7 @@
     <hr>
     <form action="{{route('adminUpdNew',$news->id)}}" method="post">
         @csrf
-        <table width="50%" cellspacing="0" cellpadding="4">
+        <table width="90%" cellspacing="0" cellpadding="4">
 
 
 
@@ -47,7 +47,7 @@
             </div>
           @endif
 
-          <input class="form-control" type="text" placeholder="новость 1" name="name" value="{{$news->name}}" maxlength="50" size="30">
+          <input class="form-control" type="text" placeholder="новость 1" name="name" value="{!!$news->name!!}" maxlength="60" size="50">
 
         </td>
         </tr>
@@ -67,6 +67,22 @@
         <tr><td align="left" width="100">Изображение</td><td align="left"><input class="form-control" type="file" name="image" id="image"></td></tr>
             <tr><td align="left" width="100">Статус</td><td align="left"><select class="form-control" name="selstat" id="selstat"> <option >Выбрать</option></select></td></tr>
 
+        
+        <tr>
+        <td align="left" width="100">Ссылка на источнике</td>
+        <td align="left" >
+          <input class="form-control" type="text" placeholder="ссылка" name="link" value="{{$news->link}}" maxlength="250" size="60">
+        </td>
+        </tr>
+
+        <tr>
+        <td align="left" width="100">Дата публикации</td>
+        <td align="left">
+          <input class="form-control" type="text" placeholder="Дата" name="pubDate" value="{{$news->pubDate}}" maxlength="50" size="60">
+        </td>
+        </tr>
+        
+        
         <tr><td align="left" width="100">Источник новости</td><td align="left">
          <select class="form-control" name="idsrc" id="selsrcn">
           @foreach($srcn as $s)

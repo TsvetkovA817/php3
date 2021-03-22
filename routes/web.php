@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/admin', ['uses'=>'Admin\IndexController@index', 'as'=>'admin' ] )->middleware('auth');
 
 Route::get('/',  ['uses'=>'HomeController@index', 'as'=>'home']  );
@@ -83,6 +84,13 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 //
 
+Route::get('/parser/{rss}', ['uses'=>'Admin\ParserController@index']  );
+
+Route::get('/auth/vk', ['uses'=>'SocialiteController@init'] )->name('vk.init');
+Route::get('/auth/vk/callback', ['uses'=>'SocialiteController@callback'] )->name('vk.callback');
+
+Route::get('/auth/fb', ['uses'=>'SocialiteController@loginFB'] )->name('fb.loginFB');
+Route::get('/auth/vk/responseFB', ['uses'=>'SocialiteController@responseFB'] )->name('fb.responseFB');
 
 
 /*

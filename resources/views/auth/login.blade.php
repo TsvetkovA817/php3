@@ -43,12 +43,12 @@
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
                                     <label class="form-check-label" for="remember">
                                         {{ __('Remember Me') }}
                                     </label>
                                 </div>
                             </div>
+                            
                         </div>
 
                         <div class="form-group row mb-0">
@@ -66,6 +66,8 @@
                         </div>
                     </form>
                 </div>
+                <p><a href="{{route('vk.init')}}">Вход через ВКонтакте</a></p>
+                <p><a href="{{route('fb.loginFB')}}">Вход через facebook</a></p>
             </div>
         </div>
     </div>
