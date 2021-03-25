@@ -7,6 +7,10 @@ use App\Http\Controllers\Controller;
 
 use Orchestra\Parser\Xml\Facade as XmlParser;
 use App\News;
+use App\Services\XMLParserService;
+use App\Jobs\NewsParsing;
+use App\Resources;
+
 
 class ParserController extends Controller
 {
@@ -57,7 +61,7 @@ class ParserController extends Controller
              //заголовок удаляем nbsp, тэги 
              $a['name']=trim(str_replace(chr(194).chr(160), ' ', html_entity_decode(strip_tags(mb_substr($anews[$i]['title'],0,60))))); 
              //dd($a['name']);
-             $a['desc']=strip_tags($anews[$i]['description']);     //статья 
+             $a['desc']=$anews[$i]['description'];     //статья 
              $a['idk']=$rss;                                //ИД категория: 2=музыка, 1=Армия, 3=Авто
              $a['link']=$anews[$i]['link'];                 //ссылка на оригинал
              $a['guid']=trim($anews[$i]['guid']);           //ид
@@ -88,5 +92,59 @@ class ParserController extends Controller
        
      }
     
-  
+    
+           public function parser10(XMLParserService $parserService){
+           
+           $start=date('c');
+           $rssLinks = [
+               'https://news.yandex.ru/army.rss',
+               'https://news.yandex.ru/auto.rss',
+               'https://news.yandex.ru/cosmos.rss',
+               'https://news.yandex.ru/music.rss'
+               
+           ];
+           
+           foreach ($rssLinks as $link){
+               $parserService->saveNews($link);
+           }
+           return $start .' ' .date('c');
+       }
+
+    
+       public function parser12(){
+           
+           $start=date('c');
+           $rssLinks = [
+               'https://news.yandex.ru/army.rss',
+               'https://news.yandex.ru/auto.rss',
+               'https://news.yandex.ru/cosmos.rss',
+               'https://news.yandex.ru/music.rss'
+               
+           ];
+           
+           foreach ($rssLinks as $link){
+                 NewsParsing::dispatch($link);
+           }
+           echo 'Импорт новостей добавлен в очередь задач, запустите воркер' .'<br>';
+           return $start .' ' .date('c');
+       }
+
+   
+       public function parser13(){
+          
+           $start=date('c');
+           //берем ссылки из таблицы resources
+           $rssLinks = Resources::query()->select('clink')->where('cstatus', 1)->get();
+           //dd($rssLinks);
+           
+           foreach ($rssLinks as $key => $val ){
+                 
+                 $link=trim($val['clink']);
+                 NewsParsing::dispatch($link);
+           }
+           echo 'Импорт новостей добавлен в очередь задач, запустите воркер' .'<br>';
+           return $start .' ' .date('c');
+           
+       }
+    
 }

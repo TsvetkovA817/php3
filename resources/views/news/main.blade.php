@@ -103,6 +103,7 @@
     </div>
     
      @include('news.footer')
-     
+
+    
 </body>
 </html>

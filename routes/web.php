@@ -85,12 +85,28 @@ Route::get('/home', 'HomeController@index')->name('home');
 //
 
 Route::get('/parser/{rss}', ['uses'=>'Admin\ParserController@index']  );
+Route::get('/parser10', ['uses'=>'Admin\ParserController@parser10']  );
+Route::get('/parser12', ['uses'=>'Admin\ParserController@parser12']  );
+Route::get('/parser13', ['uses'=>'Admin\ParserController@parser13']  );
 
 Route::get('/auth/vk', ['uses'=>'SocialiteController@init'] )->name('vk.init');
 Route::get('/auth/vk/callback', ['uses'=>'SocialiteController@callback'] )->name('vk.callback');
 
 Route::get('/auth/fb', ['uses'=>'SocialiteController@loginFB'] )->name('fb.loginFB');
 Route::get('/auth/vk/responseFB', ['uses'=>'SocialiteController@responseFB'] )->name('fb.responseFB');
+
+
+//Управление таблицей resources( ссылки на rss-каналы)
+Route::group(['middleware' => 'auth'], function () {
+Route::get('/resDel/{resources}', ['uses'=>'Admin\ResController@delete', 'as'=>'resDel']  ); 
+Route::resource('res', 'Admin\ResController', ['names' => ['create' => 'resAdd', 'show' => 'resShow', 'update' => 'resUpd',  'store'=>'resStore', 'edit'=>'resEdit'],
+                                         'only'  => ['index', 'show','create', 'store' ,'update',  'edit']
+                                        ]);    
+    
+});
+
+
+
 
 
 /*

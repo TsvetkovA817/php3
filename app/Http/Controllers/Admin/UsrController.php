@@ -74,7 +74,7 @@ class UsrController extends Controller
      */
     public function update(Request $request, User $user )
     {
-            //dd($zdt);
+            //dd($user);
             //dd($request);
             //if(Hash::check($request->post('password'), $user->password)){ }
         

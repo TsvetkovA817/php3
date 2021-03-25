@@ -62,7 +62,19 @@
                     @endforeach
             </div>
           @endif
-          <textarea class="form-control" rows="5" cols="32" type="text" placeholder="Описание новости" name="desc" >{!! $news->desc !!}</textarea></td>
+          
+<!--          <textarea  class="form-control" rows="5" cols="32" type="text" placeholder="Описание новости" name="desc" >{!! $news->desc !!}</textarea></td>-->
+        
+         <textarea  id="editor4" name="desc" >{!! $news->desc !!}</textarea>
+          <script type="text/javascript"> 
+             var options = {
+                 filebrowserImageBrowserUrl: '/laravel-filemanager?type=Images',
+                 filebrowserImageUploadUrl:  '/laravel-filemanager/upload?type=Images&_token=',
+                 filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+                 filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+             };  
+             CKEDITOR.replace('editor4',options);
+          </script>  
         </tr>
         <tr><td align="left" width="100">Изображение</td><td align="left"><input class="form-control" type="file" name="image" id="image"></td></tr>
             <tr><td align="left" width="100">Статус</td><td align="left"><select class="form-control" name="selstat" id="selstat"> <option >Выбрать</option></select></td></tr>
@@ -92,6 +104,9 @@
          </td></tr>
 
         </table>
+        
+    
+               
         <br>
         <button class="form-control" type="submit">Сохранить</button>
     </form>
@@ -100,7 +115,30 @@
 
     </div>
 
-
-
+  
+    
+  
 
 @endsection
+
+@push('js')
+
+
+
+<!--<script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>-->
+ 
+ <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js" type="text/javascript"></script>
+  
+<!--  
+   <script type="text/javascript">
+    ClassicEditor.create( document.querySelector( '#editor' ) ).catch( error => {
+            console.error( error );
+        } );
+       
+    
+</script>
+   -->
+           
+
+@endpush
+
